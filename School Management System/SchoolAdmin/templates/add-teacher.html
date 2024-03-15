@@ -60,13 +60,13 @@
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Teacher Name <span class="login-danger">*</span></label>
-                                       <input type="text" class="form-control" placeholder="Enter Name">
+                                       <input type="text" class="form-control" placeholder="Enter Name" name="teacher_name">
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Gender <span class="login-danger">*</span></label>
-                                       <select class="form-control select2">
+                                       <select class="form-control select2" name="teacher_gender">
                                           <option value="">Select Gender</option>
                                           <option value="Male">Male</option>
                                           <option value="Female">Female</option>
@@ -77,43 +77,44 @@
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms calendar-icon">
                                        <label>Date Of Birth <span class="login-danger">*</span></label>
-                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY">
+                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" name="teacher_birthdate">
                                     </div>
                                  </div>
-                                 <div class="col-12 col-sm-4">
-                                    <div class="form-group local-forms">
-                                       <label>Mobile <span class="login-danger">*</span></label>
-                                       <input type="text" class="form-control" placeholder="Enter Phone">
-                                    </div>
-                                 </div>
+                                 
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms calendar-icon">
                                        <label>Joining Date <span class="login-danger">*</span></label>
-                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY">
+                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" name="teacher_joindate">
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4 local-forms">
                                     <div class="form-group">
                                        <label>Qualification <span class="login-danger">*</span></label>
-                                       <input class="form-control" type="text" placeholder="Enter Qualification">
+                                       <input class="form-control" type="text" placeholder="Enter Qualification" name="teacher_qualification">
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Experience <span class="login-danger">*</span></label>
-                                       <input class="form-control" type="text" placeholder="Enter Experience">
+                                       <input class="form-control" type="text" placeholder="Enter Experience" name="teacher_experience">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms">
+                                       <label>Mobile <span class="login-danger">*</span></label>
+                                       <input type="text" class="form-control" placeholder="Enter Phone" name="teacher_mobile">
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-8">
                                     <div class="form-group local-forms">
                                        <label>Address <span class="login-danger">*</span></label>
-                                       <input type="text" class="form-control" placeholder="Enter address">
+                                       <input type="text" class="form-control" placeholder="Enter address" name="teacher_address">
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Branch <span class="login-danger">*</span></label>
-                                       <select class="form-control select2" multiple>
+                                       <select class="form-control select2" multiple name="branch_ids">
                                           <!-- <option value="">Select Branch</option> -->
                                         {% for row in all_branch %}
                                           <option value="{{row.id }}">{{row.branch_name}}</option>

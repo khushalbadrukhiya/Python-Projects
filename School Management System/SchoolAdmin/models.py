@@ -56,9 +56,15 @@ class Subject(models.Model):
     subject_status = models.IntegerField(default=1)
 
 class Teacher(models.Model):
-    department_id = models.ForeignKey(Department,on_delete=models.CASCADE)
-    stdsem_id = models.ForeignKey(StdSem,on_delete=models.CASCADE)
-    subject_name = models.CharField(max_length=100)
-    subject_status = models.IntegerField(default=1)
+    branch_ids = models.CharField(max_length=50)
+    teacher_name = models.CharField(max_length=100)
+    teacher_gender = models.CharField(max_length=50)
+    teacher_birthdate = models.DateField()
+    teacher_joindate = models.DateField()
+    teacher_qualification = models.CharField(max_length=100)
+    teacher_experience = models.CharField(max_length=100)
+    teacher_address = models.TextField()
+    teacher_mobile = models.CharField(max_length=30)
+    teacher_status = models.IntegerField(default=1)
     
 
