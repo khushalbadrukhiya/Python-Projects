@@ -55,6 +55,7 @@ class Subject(models.Model):
     subject_name = models.CharField(max_length=100)
     subject_status = models.IntegerField(default=1)
 
+
 class Teacher(models.Model):
     branch_ids = models.CharField(max_length=50)
     teacher_name = models.CharField(max_length=100)
@@ -66,5 +67,5 @@ class Teacher(models.Model):
     teacher_address = models.TextField()
     teacher_mobile = models.CharField(max_length=30)
     teacher_status = models.IntegerField(default=1)
-    
+    user_id = models.ForeignKey(users,on_delete=models.CASCADE)
 
