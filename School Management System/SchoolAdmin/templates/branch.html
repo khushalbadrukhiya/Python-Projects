@@ -1,0 +1,349 @@
+{% extends 'header_footer.html' %}
+{% block content %}
+{% load static %}
+<style>
+   .custom-file-button {
+   input[type="file"] {
+   margin-left: -2px !important;
+   &::-webkit-file-upload-button {
+   display: none;
+   }
+   &::file-selector-button {
+   display: none;
+   }
+   }
+   &:hover {
+   label {
+   background-color: #dde0e3;
+   cursor: pointer;
+   }
+   }
+   }
+   .center-cropped-profile {
+   width: 120px;
+   height: 120px;
+   background-position: center center;
+   background-repeat: no-repeat;
+   }
+
+   .center-cropped-profile2 {
+    width: 70px;
+    height: 70px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    }
+</style>
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      <div class="page-header">
+         <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">Branch</h3>
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="teachers.html">Settings</a></li>
+                  <li class="breadcrumb-item active">Branch</li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="card">
+               <div class="card-body" id="form_preview">
+                  <form enctype="multipart/form-data" id="branch_frm" name="branch_frm">
+                     {% csrf_token %}
+                     <input type="hidden" name="branchid" value="{{selectbranch.id}}" id="branchid" />
+                     <div class="row">
+                        <div class="col-12">
+                           <h5 class="form-title"><span>Basic Details</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                           <div class="form-group local-forms">
+                              <label>Branch Name <span class="login-danger">*</span></label>
+                              <input type="text" class="form-control" placeholder="Enter Name" name="branch_name" value="{{selectbranch.branch_name}}">
+                           </div>
+                        </div>
+                        <div class="col-8">
+                           <div class="form-group local-forms">
+                              <label>Branch Address <span class="login-danger">*</span></label>
+                              <input type="text" class="form-control" placeholder="Enter address" name="branch_address" value="{{selectbranch.branch_address}}">
+                           </div>
+                        </div>
+                        <div class="col-12">
+                           <h5 class="form-title"><span>Login Details</span></h5>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                           <img src="{% static 'assets/user_default.jpg' %}" id="image_preview" alt="image" class="img-fluid rounded-circle center-cropped-profile"  style="margin-bottom:10px;">
+                           <div class="input-group custom-file-button">
+                              <label class="input-group-text" for="inputGroupFile">Choose Photo</label>
+                              <input type="file" class="form-control"  name="user_image" aria-label="file example" id="inputGroupFile" onchange="readURL(this)" >
+                           </div>
+                        </div>
+                        <div class="col-9">
+                           <div class="col-12 col-sm-12">
+                              <div class="form-group local-forms">
+                                 <label>User Name <span class="login-danger">*</span></label>
+                                 <input type="text" class="form-control" placeholder="Enter Username" name="user_name" value="{{selectbranch.user_id.user_name}}">
+                              </div>
+                           </div>
+                           <div class="col-12 col-sm-12">
+                              <div class="form-group local-forms">
+                                 <label>Email ID <span class="login-danger">*</span></label>
+                                 <input type="email" class="form-control" placeholder="Enter Mail Id" name="user_email" value="{{selectbranch.user_id.user_email}}">
+                              </div>
+                           </div>
+                           <div class="col-12 col-sm-12">
+                              <div class="form-group local-forms">
+                                 <label>Password <span class="login-danger">*</span></label>
+                                 <input type="text" class="form-control" placeholder="Enter Password" name="user_password" >
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-12">
+                           <div class="student-submit">
+                              <button type="button" onClick="ins_branch(document.branch_frm)" class="btn btn-primary">Save</button>
+                              <button type="button"  onClick="reset_From('branch_frm')"  class="btn btn-secondary">Reset</button>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            <div class="card">
+               <div class="card-header">
+                  <h5 class="card-title mb-2">Branch</h5>
+                  <p class="card-text">
+                  </p>
+               </div>
+               <div class="card-body">
+                  <div class="table-responsive" id="viewtable">
+                     <table class="datatable1 table table-stripped">
+                        <thead>
+                           <tr>
+                              <th>ID</th>
+                              <th>Profile</th>
+                              <th>Branch Details</th>
+                              <th>User Details</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in all_branch %}
+                           <tr>
+                              <td>{{row.id}}</td>
+                              <td> <img src="{{ row.user_id.user_image.url }}"  alt="Image" class="img-fluid rounded-circle center-cropped-profile2"/></td>
+                              <td>{{row.branch_name}} <br>{{row.branch_address}} </td>
+                              <td>{{row.user_id.user_name}} <br>{{row.user_id.user_email}}</td>
+                              <td>
+                               
+
+                                <div class="form-check form-switch">
+                                 <input class="form-check-input" type="checkbox" role="switch" onchange="changeStatus('user_status',{{row.user_id.id}})" id="user_status{{row.user_id.id}}"  {% if row.user_id.user_status == 1 %} checked {% endif %}>
+                                 
+                               </div>
+                            </td>
+                              <td>
+                                <a  onClick="return selectRecord({{row.id}})" class="btn btn-sm btn-rounded btn-primary"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                <a  onClick="return delRecord({{row.id}})" class="btn btn-sm btn-rounded btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
+                              </td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+ function ins_branch(frm)
+ {
+   var f1 = new FormData(frm);
+   $.ajax({
+     url:'{% url "addbranch" %}',
+     type:"post",
+     data:f1,
+     processData:false,
+     contentType:false,
+     dataType:"json",
+     success:function(response)
+     {
+        if(response.success)
+        {
+          // $("#branch_frm")[0].reset();
+           $(':input','#branch_frm')
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .prop('checked', false)
+            .prop('selected', false);
+            
+           $('#branchid').val("");
+
+           $('#viewtable').load(document.URL + ' #viewtable', function() {
+            // Reinitialize DataTable
+            $(".datatable1").dataTable();
+        });
+           $('#image_preview').attr('src', '{% static 'assets/user_default.jpg' %}');
+           swal({
+              title: "Good job!",
+              text: "Branch Save Successfully",
+              icon: "success"
+           });
+        }
+        else
+        {
+         swal("Fail");
+        }
+         
+     }
+ });
+ }
+</script>
+
+<script>
+   function delRecord(id)
+   {
+      swal({
+         title: "Are you sure",
+         text: "Delete Branch?",
+         icon: "warning",
+         buttons: true,
+         dangerMode: true,
+       })
+       .then((willDelete) => {
+         if (willDelete) {
+
+            $.ajax({
+               url:"{% url 'deleteBranch' %}",
+               type:"post",
+               data:{'id':id},
+               headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+               success: function()
+                     {
+                       
+                        $('#viewtable').load(document.URL + ' #viewtable', function() {
+                           // Reinitialize DataTable
+                           $(".datatable1").dataTable();
+                       });
+                       Swal.fire({
+                        title: "Good job!",
+                        text: "Branch Delete Successfully",
+                        icon: "success"
+                      });
+                    }
+               });
+         } 
+       });
+
+
+      
+   }
+</script>
+
+<script>
+   function selectRecord(id)
+   {
+      $.ajax({
+         url:"{% url 'editBranch' %}",
+         type:"post",
+         data:{'id':id},
+         headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+         success: function(data)
+         {
+            $('#form_preview').html(data);  
+            $('html, body').scrollTop($("#form_preview").offset().top);
+            
+                
+         }
+         });
+   }
+      
+</script>
+
+<script>
+   function changeStatus(div_id,user_id)
+   {
+      var status = $('#'+div_id+user_id).is(':checked');
+      var user_status;
+      if(status)
+      {
+         user_status=1;
+      }
+      else{
+         user_status=0;
+      }
+     
+      $.ajax({
+         url:"{% url 'changeUserStatus' %}",
+         type:"post",
+         data:{
+               'user_id':user_id,
+               'user_status':user_status
+               },
+      
+         dataType:"json",
+         headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+         success: function(response)
+            {
+               
+               if(response.success)
+               {
+                  toastr.success(response.msg, "", {
+                     closeButton: !0,
+                     tapToDismiss: !1,
+                     positionClass: "toast-bottom-right",
+                     timeOut: 2e3,
+                   
+                 });
+
+               }
+               else
+               {
+                  toastr.error(response.msg, "", {
+                     closeButton: !0,
+                     tapToDismiss: !1,
+                     positionClass: "toast-bottom-right",
+                     timeOut: 2e3,
+                   
+                 });
+
+               }
+                 
+            }
+         });
+
+   }
+</script>
+
+<script>
+   function reset_From(form_id)
+   {
+         $(':input','#'+form_id)
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .prop('checked', false)
+            .prop('selected', false);
+            
+           $('#branchid').val("");
+           $('#image_preview').attr('src', '{% static 'assets/user_default.jpg' %}');
+      
+   }
+</script>
+
+{% endblock %}
+
+

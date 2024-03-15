@@ -1,0 +1,173 @@
+{% extends 'header_footer.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .custom-file-button {
+    input[type="file"] {
+    margin-left: -2px !important;
+    &::-webkit-file-upload-button {
+    display: none;
+    }
+    &::file-selector-button {
+    display: none;
+    }
+    }
+    &:hover {
+    label {
+    background-color: #dde0e3;
+    cursor: pointer;
+    }
+    }
+    }
+    .center-cropped-profile {
+    width: 120px;
+    height: 120px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    }
+ 
+    .center-cropped-profile2 {
+     width: 70px;
+     height: 70px;
+     background-position: center center;
+     background-repeat: no-repeat;
+     }
+ </style>
+
+         <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Add Teachers</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="teachers.html">Teachers</a></li>
+                           <li class="breadcrumb-item active">Add Teachers</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card">
+                        <div class="card-body">
+                           <form>
+                              <div class="row">
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Basic Details</span></h5>
+                                 </div>
+                                
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms">
+                                       <label>Teacher Name <span class="login-danger">*</span></label>
+                                       <input type="text" class="form-control" placeholder="Enter Name">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms">
+                                       <label>Gender <span class="login-danger">*</span></label>
+                                       <select class="form-control select2">
+                                          <option value="">Select Gender</option>
+                                          <option value="Male">Male</option>
+                                          <option value="Female">Female</option>
+                                         
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms calendar-icon">
+                                       <label>Date Of Birth <span class="login-danger">*</span></label>
+                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms">
+                                       <label>Mobile <span class="login-danger">*</span></label>
+                                       <input type="text" class="form-control" placeholder="Enter Phone">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms calendar-icon">
+                                       <label>Joining Date <span class="login-danger">*</span></label>
+                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4 local-forms">
+                                    <div class="form-group">
+                                       <label>Qualification <span class="login-danger">*</span></label>
+                                       <input class="form-control" type="text" placeholder="Enter Qualification">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms">
+                                       <label>Experience <span class="login-danger">*</span></label>
+                                       <input class="form-control" type="text" placeholder="Enter Experience">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-8">
+                                    <div class="form-group local-forms">
+                                       <label>Address <span class="login-danger">*</span></label>
+                                       <input type="text" class="form-control" placeholder="Enter address">
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-4">
+                                    <div class="form-group local-forms">
+                                       <label>Branch <span class="login-danger">*</span></label>
+                                       <select class="form-control select2" multiple>
+                                          <!-- <option value="">Select Branch</option> -->
+                                        {% for row in all_branch %}
+                                          <option value="{{row.id }}">{{row.branch_name}}</option>
+                                        {% endfor %}
+                                         
+                                       </select>
+                                    </div>
+                                 </div>
+
+
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Login Details</span></h5>
+                                 </div>
+                                 <div class="col-sm-3 text-center">
+                                    <img src="{% static 'assets/user_default.jpg' %}" id="image_preview" alt="image" class="img-fluid rounded-circle center-cropped-profile"  style="margin-bottom:10px;">
+                                    <div class="input-group custom-file-button">
+                                       <label class="input-group-text" for="inputGroupFile">Choose Photo</label>
+                                       <input type="file" class="form-control"  name="user_image" aria-label="file example" id="inputGroupFile" onchange="readURL(this)" >
+                                    </div>
+                                 </div>
+
+                                 <div class="col-9">
+                                    <div class="col-12 col-sm-12">
+                                        <div class="form-group local-forms">
+                                            <label>User Name <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Username" name="user_name" value="{{selectbranch.user_id.user_name}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12">
+                                        <div class="form-group local-forms">
+                                            <label>Email ID <span class="login-danger">*</span></label>
+                                            <input type="email" class="form-control" placeholder="Enter Mail Id" name="user_email" value="{{selectbranch.user_id.user_email}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12">
+                                        <div class="form-group local-forms">
+                                            <label>Password <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Password" name="user_password" >
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                 <div class="col-12">
+                                    <div class="student-submit">
+                                       <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endblock %}
