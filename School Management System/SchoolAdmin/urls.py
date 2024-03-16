@@ -44,6 +44,7 @@ urlpatterns = [
     path('actionSubject/', stdSemView.actionSubject,name="actionSubject"),
 
     path('addTeacher/', teacherView.addTeacher,name="addTeacher"),
+    path('formValidTeacher/', teacherView.formValidTeacher,name="formValidTeacher"),
    
     
 ]

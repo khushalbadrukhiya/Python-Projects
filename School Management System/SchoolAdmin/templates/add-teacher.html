@@ -51,7 +51,7 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form enctype="multipart/form-data" class="needs-validation was-validated" novalidate  method="post" id="teacher_frm" name="teacher_frm" action="{% url 'addTeacher' %}">
+                           <form enctype="multipart/form-data" class="needs-validation" novalidate  method="post" id="main_frm" name="main_frm" >
                               {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
@@ -62,9 +62,7 @@
                                     <div class="form-group local-forms">
                                        <label>Teacher Name <span class="login-danger">*</span></label>
                                        <input type="text" class="form-control" placeholder="Enter Name" name="teacher_name" required>
-                                       <div class="invalid-feedback">
-                                          Please provide a valid city.
-                                       </div>
+                                       <div class="invalid-feedback">Please Enter Name</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
@@ -76,13 +74,14 @@
                                           <option value="Female">Female</option>
                                          
                                        </select>
-                                       <div class="invalid-feedback">Example invalid custom select feedback</div>
+                                       <div class="invalid-feedback">Please Select Gender</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms calendar-icon">
                                        <label>Date Of Birth <span class="login-danger">*</span></label>
                                        <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" name="teacher_birthdate" required>
+                                       <div class="invalid-feedback">Please Select Birthdate</div>
                                     </div>
                                  </div>
                                  
@@ -90,45 +89,48 @@
                                     <div class="form-group local-forms calendar-icon">
                                        <label>Joining Date <span class="login-danger">*</span></label>
                                        <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" name="teacher_joindate" required>
+                                       <div class="invalid-feedback">Please Select Joining Date</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4 local-forms">
                                     <div class="form-group">
                                        <label>Qualification <span class="login-danger">*</span></label>
                                        <input class="form-control" type="text" placeholder="Enter Qualification" name="teacher_qualification" required>
+                                       <div class="invalid-feedback">Please Enter Qualification</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Experience <span class="login-danger">*</span></label>
                                        <input class="form-control" type="text" placeholder="Enter Experience" name="teacher_experience" required>
+                                       <div class="invalid-feedback">Please Enter Experience</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Mobile <span class="login-danger">*</span></label>
                                        <input type="text" class="form-control" placeholder="Enter Phone" name="teacher_mobile" required>
+                                       <div class="invalid-feedback">Please Enter Mobile No</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-8">
                                     <div class="form-group local-forms">
                                        <label>Address <span class="login-danger">*</span></label>
                                        <input type="text" class="form-control" placeholder="Enter address" name="teacher_address" required>
+                                       <div class="invalid-feedback">Please Enter Address</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Branch <span class="login-danger">*</span></label>
-                                       <select class="form-control select2" multiple name="branch_ids[]" required>
+                                       <select class="form-control select2" multiple name="branch_ids" required>
                                           <!-- <option value="">Select Branch</option> -->
                                         {% for row in all_branch %}
                                           <option value="{{row.id }}">{{row.branch_name}}</option>
                                         {% endfor %}
                                          
                                        </select>
-                                       <div class="invalid-feedback">
-                                          Please provide a valid city.
-                                       </div>
+                                       <div class="invalid-feedback">Please Select Branch</div>
                                     </div>
                                  </div>
 
@@ -141,6 +143,7 @@
                                     <div class="input-group custom-file-button">
                                        <label class="input-group-text" for="inputGroupFile">Choose Photo</label>
                                        <input type="file" class="form-control"  name="user_image" aria-label="file example" id="inputGroupFile" onchange="readURL(this)" required>
+                                       <div class="invalid-feedback">Please Select Profile Photo</div>
                                     </div>
                                  </div>
 
@@ -149,26 +152,30 @@
                                         <div class="form-group local-forms">
                                             <label>User Name <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Username" name="user_name" value="{{selectbranch.user_id.user_name}}" required>
+                                            <div class="invalid-feedback">Please User Name</div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-12">
                                         <div class="form-group local-forms">
                                             <label>Email ID <span class="login-danger">*</span></label>
                                             <input type="email" class="form-control" placeholder="Enter Mail Id" name="user_email" value="{{selectbranch.user_id.user_email}}" required>
+                                            <div class="invalid-feedback">Please Enter Email</div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-12">
                                         <div class="form-group local-forms">
                                             <label>Password <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Password" name="user_password" required>
+                                            <div class="invalid-feedback">Please Enter Password</div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                  <div class="col-12">
                                     <div class="student-submit">
-                                       <button type="button" class="btn btn-primary" onclick="ins_teacher('save')">Save</button>
-                                       <button type="button" class="btn btn-primary" onclick="ins_teacher('savec')">Save & Continue</button>
+                           
+                                       <button type="button" class="btn btn-primary" onclick="ins_teacher(document.main_frm,'save')">Save</button>
+                                       <button type="button" class="btn btn-primary" onclick="ins_teacher(document.main_frm,'savec')">Save & Continue</button>
                                     </div>
                                  </div>
                               </div>
@@ -181,9 +188,63 @@
          </div>
       </div>
       <script>
-         function ins_teacher(save)
+         function ins_teacher(frm,save)
          {
-            alert("Hello");
+           
+            
+            var f1 = new FormData(frm);
+            $.ajax({
+            url:'{% url "addTeacher" %}',
+            type:"post",
+            data:f1,
+            processData:false,
+            contentType:false,
+            dataType:"json",
+            success:function(response)
+            {
+               if(response.success)
+               {
+                  // $("#branch_frm")[0].reset();
+                  $("#main_frm").removeClass("was-validated");
+                  reset_From('main_frm');
+                  toastr.success(response.msg, "", {
+                        closeButton: !0,
+                        tapToDismiss: !1,
+                        positionClass: "toast-bottom-right",
+                        timeOut: 2e3,
+                     
+                  });
+               }
+               else
+               {
+                     $("#main_frm").addClass("was-validated");
+                     toastr.error(response.msg, "", {
+                        closeButton: !0,
+                        tapToDismiss: !1,
+                        positionClass: "toast-bottom-right",
+                        timeOut: 2e3,
+                     
+                  });
+               }
+                  
+            }
+         });
+
          }
       </script>
+
+<script>
+   function reset_From(form_id)
+   {
+         $(':input','#'+form_id)
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .prop('checked', false)
+            .prop('selected', false);
+            $(".select2").val("").trigger( "change" );
+           $('#teacher_id').val("");
+           $('#image_preview').attr('src', '{% static "assets/user_default.jpg" %}');
+      
+   }
+</script>
       {% endblock %}
