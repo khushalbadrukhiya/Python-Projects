@@ -11,7 +11,7 @@ def addTeacher(request):
     if request.method=="POST":
         teacher_id=request.POST['teacher_id']
         current_datetime = datetime.now()
-        sdfsdf = "";
+       
         current_datetime.strftime("%Y")
         if teacher_id!="":
            pass
