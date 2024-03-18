@@ -133,7 +133,7 @@
                                        <select class="form-control select2" multiple name="branch_ids" required>
                                           <!-- <option value="">Select Branch</option> -->
                                         {% for row in all_branch %}
-                                          <option  {% if select_teacher.branch_ids|isExists:row.id  %}  selected {% endif %} value="{{row.id }}">{{row.branch_name}}</option>
+                                          <option  {%  if select_teacher.branch_ids|isExists:row.id  %}  selected {% endif %} value="{{row.id }}">{{row.branch_name}}</option>
                                         {% endfor %}
                                          
                                        </select>
@@ -153,7 +153,7 @@
                                     {% endif %}
                                     <div class="input-group custom-file-button">
                                        <label class="input-group-text" for="inputGroupFile">Choose Photo</label>
-                                       <input type="file" class="form-control"  name="user_image" aria-label="file example" id="inputGroupFile" onchange="readURL(this)" required>
+                                       <input type="file" class="form-control"  name="user_image" aria-label="file example" id="inputGroupFile" onchange="readURL(this)" {% if action != "edit" %} required {% endif %} >
                                        <div class="invalid-feedback">Please Select Profile Photo</div>
                                     </div>
                                  </div>
@@ -176,7 +176,7 @@
                                     <div class="col-12 col-sm-12">
                                         <div class="form-group local-forms">
                                             <label>Password <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" placeholder="Enter Password" name="user_password" required>
+                                            <input type="text" class="form-control" placeholder="Enter Password" name="user_password" {% if action != "edit" %} required {% endif %} >
                                             <div class="invalid-feedback">Please Enter Password</div>
                                         </div>
                                     </div>
@@ -184,9 +184,12 @@
                                 
                                  <div class="col-12">
                                     <div class="student-submit">
-                           
+                                       {% if action == "edit" %}
+                                       <button type="button" class="btn btn-primary" onclick="ins_teacher(document.main_frm,'savec')">Save & Continue</button>
+                                       {% else %}
                                        <button type="button" class="btn btn-primary" onclick="ins_teacher(document.main_frm,'save')">Save</button>
                                        <button type="button" class="btn btn-primary" onclick="ins_teacher(document.main_frm,'savec')">Save & Continue</button>
+                                       {% endif %}
                                     </div>
                                  </div>
                               </div>
