@@ -101,6 +101,22 @@ def formValidTeacher(request):
         else:
             return JsonResponse({'success':True})
 
+def teacherList(request):
+    all_teacher = Teacher.objects.all()
+    response ={
+        'all_teacher':all_teacher
+    }
+    return render(request,"teachers.html",response)
+
+def selectTeacher(request,teacher_id):
+    select_teacher = Teacher.objects.get(id=teacher_id)
+    all_branch = branch.objects.all()
+    response ={
+        'all_branch':all_branch,
+        'select_teacher':select_teacher
+    }
+    return render(request,"add-teacher.html",response)
+
 
 
 

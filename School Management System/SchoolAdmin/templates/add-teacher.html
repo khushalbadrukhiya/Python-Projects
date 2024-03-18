@@ -1,6 +1,8 @@
 {% extends 'header_footer.html' %}
 {% block content %}
 {% load static %}
+{% load poll_extras %}
+
 <style>
     .custom-file-button {
     input[type="file"] {
@@ -57,11 +59,11 @@
                                  <div class="col-12">
                                     <h5 class="form-title"><span>Basic Details</span></h5>
                                  </div>
-                                 <input type="hidden"  name="teacher_id">
+                                 <input type="hidden"  name="teacher_id" value="{{select_teacher.id}}">
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Teacher Name <span class="login-danger">*</span></label>
-                                       <input type="text" class="form-control" placeholder="Enter Name" name="teacher_name" required>
+                                       <input type="text" class="form-control" placeholder="Enter Name" value="{{select_teacher.teacher_name}}" name="teacher_name" required>
                                        <div class="invalid-feedback">Please Enter Name</div>
                                     </div>
                                  </div>
@@ -70,8 +72,8 @@
                                        <label>Gender <span class="login-danger">*</span></label>
                                        <select class="form-control" name="teacher_gender" required>
                                           <option value="">Select Gender</option>
-                                          <option value="Male">Male</option>
-                                          <option value="Female">Female</option>
+                                          <option {% if select_teacher.teacher_gender == 'Male' %}  selected {% endif %} value="Male">Male</option>
+                                          <option {% if select_teacher.teacher_gender == 'Female' %}  selected {% endif %} value="Female">Female</option>
                                          
                                        </select>
                                        <div class="invalid-feedback">Please Select Gender</div>
@@ -79,44 +81,49 @@
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms calendar-icon">
-                                       <label>Date Of Birth <span class="login-danger">*</span></label>
-                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" name="teacher_birthdate" required>
+                                       {% with teacher_birthdate=select_teacher.teacher_birthdate|date:"d-m-Y" %}
+                                       <label>Date Of Birth<span class="login-danger">*</span></label>
+                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" value="{{teacher_birthdate}}" name="teacher_birthdate" required>
                                        <div class="invalid-feedback">Please Select Birthdate</div>
+                                       {% endwith %}
+
                                     </div>
                                  </div>
                                  
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms calendar-icon">
                                        <label>Joining Date <span class="login-danger">*</span></label>
-                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" name="teacher_joindate" required>
+                                       {% with teacher_joindate=select_teacher.teacher_joindate|date:"d-m-Y" %}
+                                       <input class="form-control datetimepicker" type="text" placeholder="DD-MM-YYYY" value="{{teacher_joindate}}" name="teacher_joindate" required>
                                        <div class="invalid-feedback">Please Select Joining Date</div>
+                                       {% endwith %}
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4 local-forms">
                                     <div class="form-group">
                                        <label>Qualification <span class="login-danger">*</span></label>
-                                       <input class="form-control" type="text" placeholder="Enter Qualification" name="teacher_qualification" required>
+                                       <input class="form-control" type="text" placeholder="Enter Qualification" name="teacher_qualification" value="{{select_teacher.teacher_qualification}}" required>
                                        <div class="invalid-feedback">Please Enter Qualification</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Experience <span class="login-danger">*</span></label>
-                                       <input class="form-control" type="text" placeholder="Enter Experience" name="teacher_experience" required>
+                                       <input class="form-control" type="text" placeholder="Enter Experience" name="teacher_experience" value="{{select_teacher.teacher_experience}}" required>
                                        <div class="invalid-feedback">Please Enter Experience</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                        <label>Mobile <span class="login-danger">*</span></label>
-                                       <input type="text" class="form-control" placeholder="Enter Phone" name="teacher_mobile" required>
+                                       <input type="text" class="form-control" placeholder="Enter Phone" name="teacher_mobile" value="{{select_teacher.teacher_mobile}}" required>
                                        <div class="invalid-feedback">Please Enter Mobile No</div>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-8">
                                     <div class="form-group local-forms">
                                        <label>Address <span class="login-danger">*</span></label>
-                                       <input type="text" class="form-control" placeholder="Enter address" name="teacher_address" required>
+                                       <input type="text" class="form-control" placeholder="Enter address" name="teacher_address" value="{{select_teacher.teacher_address}}" required>
                                        <div class="invalid-feedback">Please Enter Address</div>
                                     </div>
                                  </div>
@@ -126,7 +133,7 @@
                                        <select class="form-control select2" multiple name="branch_ids" required>
                                           <!-- <option value="">Select Branch</option> -->
                                         {% for row in all_branch %}
-                                          <option value="{{row.id }}">{{row.branch_name}}</option>
+                                          <option  {% if select_teacher.branch_ids|isExists:row.id  %}  selected {% endif %} value="{{row.id }}">{{row.branch_name}}</option>
                                         {% endfor %}
                                          
                                        </select>
@@ -139,7 +146,11 @@
                                     <h5 class="form-title"><span>Login Details</span></h5>
                                  </div>
                                  <div class="col-sm-3 text-center">
-                                    <img src="{% static 'assets/user_default.jpg' %}" id="image_preview" alt="image" class="img-fluid rounded-circle center-cropped-profile"  style="margin-bottom:10px;">
+                                    {% if select_teacher.user_id.user_image %}
+                                    <img  src="{{ select_teacher.user_id.user_image.url }}" id="image_preview" alt="image" class="img-fluid rounded-circle center-cropped-profile"  style="margin-bottom:10px;">
+                                    {% else %}
+                                    <img  src="{% static 'assets/user_default.jpg' %}" id="image_preview" alt="image" class="img-fluid rounded-circle center-cropped-profile"  style="margin-bottom:10px;">
+                                    {% endif %}
                                     <div class="input-group custom-file-button">
                                        <label class="input-group-text" for="inputGroupFile">Choose Photo</label>
                                        <input type="file" class="form-control"  name="user_image" aria-label="file example" id="inputGroupFile" onchange="readURL(this)" required>
@@ -151,14 +162,14 @@
                                     <div class="col-12 col-sm-12">
                                         <div class="form-group local-forms">
                                             <label>User Name <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" placeholder="Enter Username" name="user_name" value="{{selectbranch.user_id.user_name}}" required>
+                                            <input type="text" class="form-control" placeholder="Enter Username" name="user_name" value="{{select_teacher.user_id.user_name}}" required>
                                             <div class="invalid-feedback">Please User Name</div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-12">
                                         <div class="form-group local-forms">
                                             <label>Email ID <span class="login-danger">*</span></label>
-                                            <input type="email" class="form-control" placeholder="Enter Mail Id" name="user_email" value="{{selectbranch.user_id.user_email}}" required>
+                                            <input type="email" class="form-control" placeholder="Enter Mail Id" name="user_email" value="{{select_teacher.user_id.user_email}}" required>
                                             <div class="invalid-feedback">Please Enter Email</div>
                                         </div>
                                     </div>
@@ -214,6 +225,10 @@
                         timeOut: 2e3,
                      
                   });
+                  if(save=="savec")
+                  {
+                     window.location.href = '{% url "teacherList" %}';
+                  }
                }
                else
                {

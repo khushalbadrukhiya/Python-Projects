@@ -65,8 +65,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+            'poll_extras': 'SchoolAdmin.templatetags.poll_extras',
+            
+            }
         },
+        
     },
+    
 ]
 
 WSGI_APPLICATION = 'SchoolSystem.wsgi.application'
@@ -144,5 +150,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'diljitsingh9998@gmail.com'
 EMAIL_HOST_PASSWORD = 'btit dmqh xjeb gmbh'
+
+
 
 
