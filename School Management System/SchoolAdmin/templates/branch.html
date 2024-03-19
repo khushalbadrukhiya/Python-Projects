@@ -160,8 +160,7 @@
    </div>
 </div>
 
-<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <script>
  function ins_branch(frm)
@@ -208,19 +207,24 @@
  }
 </script>
 
+
 <script>
    function delRecord(id)
    {
-      swal({
-         title: "Are you sure",
-         text: "Delete Branch?",
-         icon: "warning",
-         buttons: true,
-         dangerMode: true,
-       })
-       .then((willDelete) => {
-         if (willDelete) {
-
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         type: "warning",
+         showCancelButton: !0,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!",
+         confirmButtonClass: "btn btn-primary",
+         cancelButtonClass: "btn btn-danger ml-1",
+         buttonsStyling: !1
+     }).then(function(t) {
+         if(t.value)
+         {
             $.ajax({
                url:"{% url 'deleteBranch' %}",
                type:"post",
@@ -242,13 +246,14 @@
                       });
                     }
                });
-         } 
-       });
+         }
+     })
 
-
+    
       
    }
 </script>
+
 
 <script>
    function selectRecord(id)

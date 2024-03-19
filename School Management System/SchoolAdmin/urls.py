@@ -46,6 +46,7 @@ urlpatterns = [
     path('addTeacher/', teacherView.addTeacher,name="addTeacher"),
     path('teacherList/', teacherView.teacherList,name="teacherList"),
     path('selectTeacher/<teacher_id>', teacherView.selectTeacher,name="selectTeacher"),
+    path('actionTeacher/', teacherView.actionTeacher,name="actionTeacher"),
    
     
 ]

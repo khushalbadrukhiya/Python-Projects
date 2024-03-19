@@ -13,3 +13,11 @@ def isExists(format_string,value):
     except:
         return False
     
+@register.filter()
+def str_to_int(value):
+    return int(value)
+
+@register.filter()
+def twoNoAdd(no1,no2):
+    return no1+no2
+    

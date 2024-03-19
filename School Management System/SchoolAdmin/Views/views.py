@@ -97,7 +97,7 @@ def forgotPassword(request):
             if npassword == cpassword:
                 select_user = users.objects.get(user_email=cemail)
                 select_user.user_password=make_password(npassword)
-                select_user.save1()
+                select_user.save()
                 return redirect('login')
             else:
                 msg = "New password and confirm Password does not match"
@@ -123,19 +123,26 @@ def addbranch(request):
                 if request.POST['user_password']!="":
                     user_edit.user_password= make_password(request.POST['user_password'])
                 branch_edit.save()
-                try:
-                    user_edit.user_image= request.FILES['user_image']
-                    user_edit.save()
-                except:
-                    user_edit.save1()
+
+                if len(request.FILES)!=0:
+                    if user_edit.user_image!="profile/default_img.jpg" and user_edit.user_image!="":
+                        os.remove(user_edit.user_image.path)
+                        user_edit.user_image= request.FILES['user_image']
+                    else:
+                        user_edit.user_image= request.FILES['user_image']
+                
+                user_edit.save()
+
                 return JsonResponse({'success':True})
             except:
                 return JsonResponse({'success':False})
         else:
-            try:
+            if len(request.FILES)!=0:
                 user_image1 = request.FILES['user_image']
-            except:
+            else:
                 user_image1 = "profile/default_img.jpg"
+
+          
             try:
                 users.objects.create(
                     user_role = "Branch",
@@ -169,6 +176,8 @@ def deleteBranch(request):
     selectbranch=branch.objects.get(id=branchid)
     id1 = selectbranch.user_id_id
     selectuser=users.objects.get(id=id1)
+    if selectuser.user_image!="profile/default_img.jpg" and selectuser.user_image!="":
+        os.remove(selectuser.user_image.path)
     selectuser.delete()
     selectbranch.delete()
     
@@ -184,7 +193,7 @@ def profile(request):
             if check_password(request.POST['oldpassword'],select_user.user_password):
                 if request.POST['newpassword']==request.POST['cpassword']:
                     select_user.user_password = make_password(request.POST['newpassword'])
-                    select_user.save1()
+                    select_user.save()
                     pass_msg = "Password Change Successfully"
                     return JsonResponse({'success':True,'pass_msg':pass_msg})
                 else:
@@ -199,22 +208,27 @@ def profile(request):
 def changeProfilePhoto(request):
     if request.method=="POST":
         select_user = users.objects.get(id=int(request.POST['user_id']))
-        try:
-            select_user.user_image= request.FILES['user_image']
+        if len(request.FILES)!=0:
+            if select_user.user_image!="profile/default_img.jpg" and select_user.user_image!="":
+                os.remove(select_user.user_image.path)
+                select_user.user_image= request.FILES['user_image']
+            else:
+                select_user.user_image= request.FILES['user_image']
+
             select_user.save()
             select_user = users.objects.get(id=int(request.POST['user_id']))
             request.session['user_image'] = select_user.user_image.url
             return JsonResponse({'success':True,'upload_msg':"Photo Change Successfully"})
-        except:
-            return JsonResponse({'success':False,'upload_msg':"Photo not update"})
-        
+        else:
+            return JsonResponse({'success':False,'upload_msg':"PLease Select Photo"})
+
 def changeUserStatus(request):
     if request.method=="POST":
         select_user = users.objects.get(id=int(request.POST['user_id']))
         try:
             
             select_user.user_status= request.POST['user_status']
-            select_user.save1()
+            select_user.save()
             return JsonResponse({'success':True,'msg':"Status Change Successfully"})
         except:
             return JsonResponse({'success':False,'msg':"Something Went Wrong"})

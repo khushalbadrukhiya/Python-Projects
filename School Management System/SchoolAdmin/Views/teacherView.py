@@ -6,6 +6,9 @@ from django.conf import settings
 from django.core.mail import send_mail
 import random
 from datetime import datetime
+import os
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 
 def addTeacher(request):
@@ -41,7 +44,7 @@ def addTeacher(request):
         if isDone==False:
             return JsonResponse({'success':False,'msg':'Please fill all the required fields'})
         else:
-            
+           
             if teacher_id!="":
                  teacher_birthdate = datetime.strptime(request.POST['teacher_birthdate'], "%d-%m-%Y").strftime("%Y-%m-%d")
                  teacher_joindate = datetime.strptime(request.POST['teacher_joindate'], "%d-%m-%Y").strftime("%Y-%m-%d")
@@ -62,19 +65,23 @@ def addTeacher(request):
  
                  if request.POST['user_password']!="":
                      user_edit.user_password= make_password(request.POST['user_password'])
-                 try:
-                     user_edit.user_image= request.FILES['user_image']
-                     user_edit.save()
-                 except:
-                     user_edit.save1() 
-
+                
+                 if len(request.FILES)!=0:
+                    if user_edit.user_image!="profile/default_img.jpg" and user_edit.user_image!="":
+                        os.remove(user_edit.user_image.path)
+                        user_edit.user_image= request.FILES['user_image']
+                    else:
+                        user_edit.user_image= request.FILES['user_image']
+                
+                 user_edit.save() 
                  teacher_edit.save()  
                  return JsonResponse({'success':True,'msg':'Teacher Save Successfully'})
             else:
-                try:
+                if len(request.FILES)!=0:
                     user_image1 = request.FILES['user_image']
-                except:
+                else:
                     user_image1 = "profile/default_img.jpg"
+            
                 try:
                     users.objects.create(
                         user_role = "Teacher",
@@ -113,9 +120,26 @@ def addTeacher(request):
     
 
 def teacherList(request):
-    all_teacher = Teacher.objects.all()
+    all_teacher = Teacher.objects.all().order_by('-id')
+    no_of_page = Paginator(all_teacher, 3)
+
+    try:
+        page_number = request.POST.get('page')
+    except:
+        page_number=1
+
+    try:
+        page_obj = no_of_page.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = no_of_page.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = no_of_page.page(no_of_page.num_pages)
+
     response ={
-        'all_teacher':all_teacher
+        'all_teacher':page_obj,
+        'total_page':range(1, page_obj.paginator.num_pages+1)
     }
     return render(request,"teachers.html",response)
 
@@ -128,6 +152,21 @@ def selectTeacher(request,teacher_id):
         'select_teacher':select_teacher
     }
     return render(request,"add-teacher.html",response)
+
+def actionTeacher(request):
+    if request.method=="POST":
+        if request.POST['teacher_action']=="delete":
+            try:
+                select_Teacher = Teacher.objects.get(id=int(request.POST['id']))
+                id1 = select_Teacher.user_id_id
+                selectuser=users.objects.get(id=id1)
+                if selectuser.user_image!="profile/default_img.jpg" and selectuser.user_image!="":
+                    os.remove(selectuser.user_image.path)
+                selectuser.delete()
+                select_Teacher.delete()
+                return JsonResponse({'success':True,'msg':"Delete Successfully"})
+            except:
+                return JsonResponse({'success':False,'msg':"Something Went Wrong"})
 
 
 
