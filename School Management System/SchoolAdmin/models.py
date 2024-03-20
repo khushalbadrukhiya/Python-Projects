@@ -44,6 +44,5 @@ class Teacher(models.Model):
     teacher_experience = models.CharField(max_length=100)
     teacher_address = models.TextField()
     teacher_mobile = models.CharField(max_length=30)
-    teacher_status = models.IntegerField(default=1)
     user_id = models.ForeignKey(users,on_delete=models.CASCADE)
 

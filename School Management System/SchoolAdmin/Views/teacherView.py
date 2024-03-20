@@ -8,6 +8,7 @@ import random
 from datetime import datetime
 import os
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
 
@@ -120,11 +121,45 @@ def addTeacher(request):
     
 
 def teacherList(request):
-    all_teacher = Teacher.objects.all().order_by('-id')
+    all_branch = branch.objects.all()
+    response ={
+         'all_branch':all_branch
+    }
+    return render(request,"teachers.html",response)
+
+def pageWithSearch(request):
+
+    id = request.POST.get('id')
+    teacher_name = request.POST.get('teacher_name')
+    teacher_mobile = request.POST.get('teacher_mobile')
+    teacher_address = request.POST.get('teacher_address')
+    teacher_gender = request.POST.get('teacher_gender')
+    branch_ids = request.POST.get('branch_ids')
+    
+    q_objects = Q()
+    
+    if id!="":
+         q_objects &= Q(id__icontains=id)
+    if teacher_name!="":
+         q_objects &= Q(teacher_name__icontains=teacher_name)
+    if teacher_mobile!="":
+         q_objects &= Q(teacher_mobile__icontains=teacher_mobile)
+    if teacher_address!="":
+         q_objects &= Q(teacher_address__icontains=teacher_address)
+    if teacher_gender!="":
+         q_objects &= Q(teacher_gender__icontains=teacher_gender)
+    if branch_ids!="":
+         q_objects &= Q(branch_ids__icontains=branch_ids)
+
+  
+    all_teacher = Teacher.objects.filter(q_objects).order_by('-id')
+    # all_teacher = Teacher.objects.all().order_by('-id')
+
+   
     no_of_page = Paginator(all_teacher, 3)
 
     try:
-        page_number = request.POST.get('page')
+        page_number = request.POST.get('page_no')
     except:
         page_number=1
 
@@ -137,11 +172,13 @@ def teacherList(request):
         # if page is empty then return last page
         page_obj = no_of_page.page(no_of_page.num_pages)
 
+    all_branch = branch.objects.all()
     response ={
+        'all_branch':all_branch,
         'all_teacher':page_obj,
         'total_page':range(1, page_obj.paginator.num_pages+1)
     }
-    return render(request,"teachers.html",response)
+    return render(request,"ajax_tbl_teachers.html",response)
 
 def selectTeacher(request,teacher_id):
     select_teacher = Teacher.objects.get(id=teacher_id)

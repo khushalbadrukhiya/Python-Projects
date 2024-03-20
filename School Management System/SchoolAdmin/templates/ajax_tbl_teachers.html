@@ -1,0 +1,75 @@
+{% load static %}
+{% load poll_extras %}
+
+<div class="table-responsive">
+   <table class="table border-0 star-student table-hover table-center mb-0 table-striped">
+      <thead class="student-thread">
+         <tr>
+         
+            <th>ID</th>
+            <th>Name</th>
+         
+            <th>Gender</th>
+            
+            <th>Branch</th>
+            <th>Address</th>
+            <th class="text-end">Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for row in all_teacher %}
+         <tr>
+         
+            <td>{{row.id}}</td>
+            <td>
+               <h2 class="table-avatar">
+                  <a href="teacher-details.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="{{ row.user_id.user_image.url }}" alt="User Image"></a>
+                  <div>
+                  {{row.teacher_name}} <br>
+                  <label style="color:#3d5ee1">{{row.user_id.user_email}}</label>
+                  </div>
+               </h2>
+            </td>
+         
+            <td>{{row.teacher_gender}}</td>
+         
+            <td>
+               {% for branch in all_branch %}
+               {%  if row.branch_ids|isExists:branch.id %}
+               {{branch.branch_name}} <br>
+               {% endif %}
+               {% endfor %}
+            </td>
+            <td>{{row.teacher_mobile}} <br>{{row.teacher_address}}</td>
+            <td class="text-end">
+               <div class="actions">
+                  <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
+                  <i class="feather-eye"></i>
+                  </a>
+                  <a href="{% url 'selectTeacher' row.id %}" class="btn btn-sm bg-danger-light">
+                  <i class="feather-edit"></i>
+                  </a>
+                  <a onClick="return delRecord({{row.id}})" class="btn btn-sm bg-danger-light">
+                     <i class="feather-trash"></i>
+                     </a>
+               </div>
+            </td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+   
+</div>
+
+<ul class="pagination mb-4" style="margin-top: 30px;">
+   <li class="page-item {% if all_teacher.has_previous == False %} disabled {% endif %}">
+      <a class="page-link" onClick="return pageChange({{all_teacher.number|add:-1}},'page')" tabindex="-1">Previous</a>
+   </li>
+   {% for p in total_page %}
+   <li class="page-item {% if p == all_teacher.number %} active {% endif %}"><a class="page-link" onClick="return pageChange({{p}},'page')">{{p}}</a></li>
+   {% endfor %}
+
+   <li class="page-item {% if all_teacher.has_next == False %} disabled {% endif %}">
+      <a class="page-link" onClick="return pageChange({{all_teacher.number|add:1}},'page')">Next </a>
+   </li>
+</ul>
