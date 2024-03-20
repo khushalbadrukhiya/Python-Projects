@@ -65,7 +65,7 @@
                                        <div class="form-group local-forms">
                                                    <label>Branch <span class="login-danger">*</span></label>
                                                       <select class="form-control "  name="branch_ids" required>
-                                                       <option value="">Select Branch</option>
+                                                       <option value="">Select Branch</option> 
                                                       {% for row in all_branch %}
                                                          <option  value="{{row.id }}">{{row.branch_name}}</option>
                                                       {% endfor %}
@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-lg-2">
                                        <div class="search-student-btn">
-                                          <button type="button" onClick="return pageChange(1,'search')" class="btn btn-primary">Search</button>
+                                          <button type="button" onClick="return pageChange(1)" class="btn btn-primary">Search</button>
                                        </div>
                                     </div>
                                  
@@ -117,7 +117,7 @@
       pageChange(1)
     });
 
-   function pageChange(page,action)
+   function pageChange(page)
    {
       $("#page_no").val(page);
       var frm = document.getElementById('search_frm'); 

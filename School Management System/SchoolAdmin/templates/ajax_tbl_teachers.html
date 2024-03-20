@@ -63,13 +63,13 @@
 
 <ul class="pagination mb-4" style="margin-top: 30px;">
    <li class="page-item {% if all_teacher.has_previous == False %} disabled {% endif %}">
-      <a class="page-link" onClick="return pageChange({{all_teacher.number|add:-1}},'page')" tabindex="-1">Previous</a>
+      <a class="page-link" onClick="return pageChange({{all_teacher.number|add:-1}})" tabindex="-1">Previous</a>
    </li>
    {% for p in total_page %}
-   <li class="page-item {% if p == all_teacher.number %} active {% endif %}"><a class="page-link" onClick="return pageChange({{p}},'page')">{{p}}</a></li>
+   <li class="page-item {% if p == all_teacher.number %} active {% endif %}"><a class="page-link" onClick="return pageChange({{p}})">{{p}}</a></li>
    {% endfor %}
 
    <li class="page-item {% if all_teacher.has_next == False %} disabled {% endif %}">
-      <a class="page-link" onClick="return pageChange({{all_teacher.number|add:1}},'page')">Next </a>
+      <a class="page-link" onClick="return pageChange({{all_teacher.number|add:1}})">Next </a>
    </li>
 </ul>
