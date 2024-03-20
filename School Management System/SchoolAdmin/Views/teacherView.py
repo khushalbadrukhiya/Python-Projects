@@ -147,7 +147,7 @@ def pageWithSearch(request):
     if teacher_address!="":
          q_objects &= Q(teacher_address__icontains=teacher_address)
     if teacher_gender!="":
-         q_objects &= Q(teacher_gender__icontains=teacher_gender)
+         q_objects &= Q(teacher_gender__contains=teacher_gender)
     if branch_ids!="":
          q_objects &= Q(branch_ids__icontains=branch_ids)
 

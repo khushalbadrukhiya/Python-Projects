@@ -76,6 +76,13 @@
                                     <div class="col-lg-2">
                                        <div class="search-student-btn">
                                           <button type="button" onClick="return pageChange(1)" class="btn btn-primary">Search</button>
+                                         
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                       <div class="search-student-btn">
+                                          
+                                          <button type="button" onClick="return pageChange(1,'reset')" class="btn btn-primary">Reset</button>
                                        </div>
                                     </div>
                                  
@@ -117,8 +124,12 @@
       pageChange(1)
     });
 
-   function pageChange(page)
+   function pageChange(page,action)
    {
+      if(action=="reset")
+      {
+         $("#search_frm")[0].reset();
+      }
       $("#page_no").val(page);
       var frm = document.getElementById('search_frm'); 
       var f1 = new FormData(frm);
