@@ -23,7 +23,8 @@ from SchoolAdmin.Views import teacherView
 
 
 urlpatterns = [
-    path('', views.login,name="login"),
+    path('', views.index,name="index"),
+    path('login', views.login,name="login"),
     path('dashboard/', views.dashboard,name="dashboard"),
     path('logout/', views.logout,name="logout"),
     path('addbranch/', views.addbranch,name="addbranch"),
@@ -47,7 +48,7 @@ urlpatterns = [
     path('teacherList/', teacherView.teacherList,name="teacherList"),
     path('selectTeacher/<teacher_id>', teacherView.selectTeacher,name="selectTeacher"),
     path('actionTeacher/', teacherView.actionTeacher,name="actionTeacher"),
-    path('pageWithSearch/', teacherView.pageWithSearch,name="pageWithSearch"),
+    
    
     
 ]

@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'SchoolAdmin.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'SchoolSystem.urls'
@@ -150,6 +151,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'diljitsingh9998@gmail.com'
 EMAIL_HOST_PASSWORD = 'btit dmqh xjeb gmbh'
+
+LOGIN_URL = '/login/'
+
 
 
 

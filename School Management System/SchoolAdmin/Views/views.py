@@ -7,15 +7,22 @@ from django.core.mail import send_mail
 import random
 
 
+
+
 # Create your views here.
+def index(request):
+    return redirect('login')
 
 def login(request):
     if request.method=="POST":
         email = request.POST['email']
         password = request.POST['password']
         msg  = ""
+
         try:
+            
             select_user = users.objects.get(user_email=email)
+           
             if check_password(password,select_user.user_password) and select_user.user_status==1:
                 request.session['user_id'] = select_user.id
                 request.session['is_login'] = True
@@ -31,11 +38,14 @@ def login(request):
         
         return render(request,"login.html",{"msg":msg})
     else:
+      
         try:
             if  request.session['is_login']==True:
                 return redirect('dashboard')
         except:
             return render(request,"login.html")
+        return render(request,"login.html")
+
 
 def isLogin(request):
      if request.session.get('is_login',False)==False:
@@ -43,11 +53,10 @@ def isLogin(request):
      else:
          return True
 
+
 def dashboard(request):
    
-    if isLogin(request)==False:
-        return redirect('login')
-    
+   
     if request.session.get('user_role','none')=="admin":
         return render(request,"dashboard_admin.html")
     elif request.session.get('user_role','none')=="Branch":

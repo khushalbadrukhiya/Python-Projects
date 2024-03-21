@@ -48,6 +48,11 @@
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                        <div class="form-group">
+                                          <input type="text" class="form-control" placeholder="Search by Email ..." name="teacher_email">
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6">
+                                       <div class="form-group">
                                           <input type="text" class="form-control" placeholder="Search by Address ..." name="teacher_address">
                                        </div>
                                     </div>
@@ -134,7 +139,7 @@
       var frm = document.getElementById('search_frm'); 
       var f1 = new FormData(frm);
       $.ajax({
-         url:"{% url 'pageWithSearch' %}",
+         url:"{% url 'teacherList' %}",
          type:"post",
          data:f1,
          processData:false,
