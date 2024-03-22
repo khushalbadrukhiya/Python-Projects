@@ -1,7 +1,11 @@
 from django.db import models
 import os
 
+
+
 # Create your models here.
+
+
 class users(models.Model):
     user_role = models.CharField(max_length=100)
     user_email = models.EmailField(max_length=100)

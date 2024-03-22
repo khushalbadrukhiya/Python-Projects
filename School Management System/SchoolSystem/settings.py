@@ -152,7 +152,10 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'diljitsingh9998@gmail.com'
 EMAIL_HOST_PASSWORD = 'btit dmqh xjeb gmbh'
 
-LOGIN_URL = '/login/'
+
+
+
+
 
 
 

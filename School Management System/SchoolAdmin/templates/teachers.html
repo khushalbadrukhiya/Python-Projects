@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                        <div class="form-group">
-                                          <input type="text" class="form-control" placeholder="Search by Email ..." name="teacher_email">
+                                          <input type="text" class="form-control"  placeholder="Search by Email ..." name="teacher_email">
                                        </div>
                                     </div>
                                     <div class="col-lg-2 col-md-6">
@@ -122,9 +122,27 @@
                   </div>
                </div>
             </div>
-         </div>          
-
+         </div>     
+         
+<!--    
 <script>
+   $('#search_frm input[type=text]').keyup(function() {
+    
+      pageChange(1)
+      
+    });
+
+    $('#search_frm select').change(function() {
+    
+    pageChange(1)
+    
+  });
+
+ 
+</script> -->
+<script>
+ 
+
    document.addEventListener("DOMContentLoaded", () => {
       pageChange(1)
     });
