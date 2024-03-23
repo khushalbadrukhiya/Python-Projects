@@ -49,4 +49,6 @@ class Teacher(models.Model):
     teacher_address = models.TextField()
     teacher_mobile = models.CharField(max_length=30)
     user_id = models.ForeignKey(users,on_delete=models.CASCADE)
+    teacher_salary = models.IntegerField(default=0)
+
 

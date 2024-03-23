@@ -9,6 +9,7 @@ from datetime import datetime
 import os
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.db.models import Sum
 
 
 
@@ -57,6 +58,7 @@ def addTeacher(request):
                  teacher_edit.teacher_joindate = teacher_joindate
                  teacher_edit.teacher_qualification = request.POST['teacher_qualification']
                  teacher_edit.teacher_experience = request.POST['teacher_experience']
+                 teacher_edit.teacher_salary = request.POST['teacher_salary']
                  teacher_edit.teacher_address = request.POST['teacher_address']
                  teacher_edit.teacher_mobile = request.POST['teacher_mobile']
                  id1=teacher_edit.user_id_id
@@ -107,6 +109,7 @@ def addTeacher(request):
                     teacher_joindate = teacher_joindate,
                     teacher_qualification = request.POST['teacher_qualification'],
                     teacher_experience = request.POST['teacher_experience'],
+                    teacher_salary = request.POST['teacher_salary'],
                     teacher_address = request.POST['teacher_address'],
                     teacher_mobile = request.POST['teacher_mobile']
                 )
@@ -149,6 +152,7 @@ def teacherList(request):
 
     
         all_teacher = Teacher.objects.filter(q_objects).order_by('-id')
+       
         no_of_page = Paginator(all_teacher, 3)
 
         try:
