@@ -52,6 +52,8 @@ urlpatterns = [
 
     path('getTeacher/', apiView.getTeacher,name="getTeacher"),
     path('insTeacher/', apiView.insTeacher,name="insTeacher"),
+    path('updTeacher/<id>', apiView.updTeacher,name="updTeacher"),
+    path('deleteTeacher/<id>', apiView.deleteTeacher,name="deleteTeacher"),
     
    
     
