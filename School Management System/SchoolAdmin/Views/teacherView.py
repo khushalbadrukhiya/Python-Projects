@@ -171,6 +171,7 @@ def teacherList(request):
         response ={
             'all_branch':all_branch,
             'all_teacher':page_obj,
+           
             'total_page':range(1, page_obj.paginator.num_pages+1)
         }
         return render(request,"ajax_tbl_teachers.html",response)

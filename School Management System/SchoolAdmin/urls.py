@@ -19,6 +19,7 @@ from django.urls import path
 from SchoolAdmin.Views import views
 from SchoolAdmin.Views import stdSemView
 from SchoolAdmin.Views import teacherView
+from SchoolAdmin.Views import apiView
 
 
 
@@ -48,6 +49,9 @@ urlpatterns = [
     path('teacherList/', teacherView.teacherList,name="teacherList"),
     path('selectTeacher/<teacher_id>', teacherView.selectTeacher,name="selectTeacher"),
     path('actionTeacher/', teacherView.actionTeacher,name="actionTeacher"),
+
+    path('getTeacher/', apiView.getTeacher,name="getTeacher"),
+    path('insTeacher/', apiView.insTeacher,name="insTeacher"),
     
    
     
