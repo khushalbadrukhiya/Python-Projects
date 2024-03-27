@@ -23,6 +23,7 @@ from SchoolAdmin.Views import apiView
 
 
 
+
 urlpatterns = [
     path('', views.index,name="index"),
     path('login', views.login,name="login"),
@@ -50,10 +51,12 @@ urlpatterns = [
     path('selectTeacher/<teacher_id>', teacherView.selectTeacher,name="selectTeacher"),
     path('actionTeacher/', teacherView.actionTeacher,name="actionTeacher"),
 
-    path('getTeacher/', apiView.getTeacher,name="getTeacher"),
-    path('insTeacher/', apiView.insTeacher,name="insTeacher"),
-    path('updTeacher/<id>', apiView.updTeacher,name="updTeacher"),
-    path('deleteTeacher/<id>', apiView.deleteTeacher,name="deleteTeacher"),
+    # path('getTeacher/', apiView.getTeacher,name="getTeacher"),
+    # path('insTeacher/', apiView.insTeacher,name="insTeacher"),
+    # path('updTeacher/<id>', apiView.updTeacher,name="updTeacher"),
+    # path('deleteTeacher/<id>', apiView.deleteTeacher,name="deleteTeacher"),
+
+    path('apiTeacher/', apiView.TeacherAPI.as_view(),name="apiTeacher"),
     
    
     
