@@ -8,7 +8,7 @@ class LoginRequiredMiddleware:
     def __call__(self, request):
         # Check if the user is authenticated
         if request.session.get('is_login',False)==False:
-            login_exempt_views = ['login', 'forgotPassword','getTeacher','insTeacher','updTeacher','deleteTeacher','apiTeacher']  # Add your views here
+            login_exempt_views = ['login', 'forgotPassword','getTeacher','insTeacher','updTeacher','deleteTeacher','sendOTP','apiTeacher']  # Add your views here
 
             # Check if the requested view is exempt from login
             if not any(view in request.path for view in login_exempt_views):

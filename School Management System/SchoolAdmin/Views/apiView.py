@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from ..Serializers import *
 from rest_framework.views import APIView
 
+
 class TeacherAPI(APIView):
     def get(self, request):
           teacher_obj = Teacher.objects.all()
