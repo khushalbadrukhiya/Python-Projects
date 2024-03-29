@@ -21,9 +21,9 @@ def addTeacher(request):
         if teacher_id!="":
             exclude_key.append("user_password")
 
-      
+
         isDone = True
-      
+
         for key in request.POST:
             
             if "teacher_id" in exclude_key:
@@ -33,7 +33,7 @@ def addTeacher(request):
                     isDone = False
             
         branch_ids = ",".join(str(element) for element in request.POST.getlist("branch_ids"))
-       
+
         if branch_ids=="":
             isDone = False
         
@@ -46,7 +46,7 @@ def addTeacher(request):
         if isDone==False:
             return JsonResponse({'success':False,'msg':'Please fill all the required fields'})
         else:
-           
+
             if teacher_id!="":
                  teacher_birthdate = datetime.strptime(request.POST['teacher_birthdate'], "%d-%m-%Y").strftime("%Y-%m-%d")
                  teacher_joindate = datetime.strptime(request.POST['teacher_joindate'], "%d-%m-%Y").strftime("%Y-%m-%d")
@@ -121,7 +121,7 @@ def addTeacher(request):
          'all_branch':all_branch
       }
       return render(request,"add-teacher.html",response)
-    
+
 
 def teacherList(request):
     if request.method=="POST":
@@ -134,7 +134,7 @@ def teacherList(request):
         teacher_email = request.POST.get('teacher_email')
         
         q_objects = Q()
-        
+
         if id!="":
             q_objects &= Q(id__icontains=id)
         if teacher_name!="":
@@ -150,9 +150,9 @@ def teacherList(request):
         if teacher_email!="":
             q_objects &= Q(user_id_id__user_email__icontains=teacher_email)
 
-    
+
         all_teacher = Teacher.objects.filter(q_objects).order_by('-id')
-       
+
         no_of_page = Paginator(all_teacher, 3)
 
         try:
