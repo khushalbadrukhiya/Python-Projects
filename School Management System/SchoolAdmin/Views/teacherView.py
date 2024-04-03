@@ -144,10 +144,9 @@ def teacherList(request):
         if teacher_address!="":
             q_objects &= Q(teacher_address__icontains=teacher_address)
         if teacher_gender!="":
-            q_objects &= Q(teacher_gender__conta
+            q_objects  &= Q(teacher_gender__contains=teacher_gender)
             
             
-            ins=teacher_gender)
         if branch_ids!="":
             q_objects &= Q(branch_ids__icontains=branch_ids)
         if teacher_email!="":
