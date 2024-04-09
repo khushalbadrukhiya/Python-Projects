@@ -7,8 +7,14 @@ from rest_framework.response import Response
 from ..Serializers import *
 from rest_framework.views import APIView
 
+from rest_framework.permissions import IsAuthenticated 
+from ..Serializers import UsersSerializer
 
+
+    
 class TeacherAPI(APIView):
+    permission_classes = (IsAuthenticated, ) 
+
     def get(self, request):
           teacher_obj = Teacher.objects.all()
           serializer = TeacherSerializer(teacher_obj, many=True)
